@@ -98,6 +98,18 @@
             }
         }
 
+        .chat-body iframe {
+            filter: brightness(0.95) contrast(1.05);
+        }
+
+        .chat-widget {
+            transition: all 0.3s ease;
+        }
+
+        .chat-widget:hover {
+            box-shadow: 0 25px 70px rgba(201, 169, 98, 0.3);
+        }
+
         /* Navigation */
         .nav-link {
             position: relative;
@@ -446,6 +458,83 @@
 
         ::-webkit-scrollbar-thumb:hover {
             background: var(--accent);
+        }
+
+        /* Chat Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 350px;
+            background: rgba(15, 15, 15, 0.9);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            z-index: 999;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            font-size: 14px;
+        }
+
+        .chat-header {
+            padding: 14px 20px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: var(--bg);
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .chat-body {
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .bot-message {
+            background: rgba(201, 169, 98, 0.15);
+            padding: 10px 14px;
+            border-radius: 12px;
+            align-self: flex-start;
+        }
+
+        .user-message {
+            background: var(--accent);
+            color: var(--bg);
+            padding: 10px 14px;
+            border-radius: 12px;
+            align-self: flex-end;
+        }
+
+        .chat-input-container {
+            display: flex;
+            border-top: 1px solid var(--border);
+        }
+
+        .chat-input-container input {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            border: none;
+            color: var(--fg);
+        }
+
+        .chat-input-container button {
+            padding: 12px 18px;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -995,6 +1084,24 @@
         </div>
         <img id="lightboxImg" src="" alt="Wedding Preview">
     </div>
+    <!-- AI Chat Widget -->
+    <div id="chatWidget" class="chat-widget">
+        <div class="chat-header" onclick="toggleChat()">
+            <span>Wedding AI Assistant</span>
+            <span id="chatToggleIcon">▲</span>
+        </div>
+
+        <div class="chat-body" id="chatBody" style="padding:0; height:450px;">
+            <iframe src="https://240768e2c9c55c1f30.gradio.live/" frameborder="0" style="
+                width:100%;
+                height:100%;
+                border:none;
+                border-radius:0 0 20px 20px;
+                background:#0f0f0f;
+            ">
+            </iframe>
+        </div>
+    </div>
 
     <script>
         // Data
@@ -1209,6 +1316,30 @@
                 });
             }
         });
+        function toggleChat() {
+            const body = document.getElementById("chatBody");
+            const icon = document.getElementById("chatToggleIcon");
+
+            if (body.style.display === "none") {
+                body.style.display = "flex";
+                icon.innerText = "▲";
+            } else {
+                body.style.display = "none";
+                icon.innerText = "▼";
+            }
+        }
+        function toggleChat() {
+            const body = document.getElementById("chatBody");
+            const icon = document.getElementById("chatToggleIcon");
+
+            if (body.style.display === "none") {
+                body.style.display = "block";
+                icon.innerText = "▲";
+            } else {
+                body.style.display = "none";
+                icon.innerText = "▼";
+            }
+        }
     </script>
 </body>
 
